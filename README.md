@@ -4,9 +4,9 @@
 # REANDME目录
 * [配置环境](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/tree/main?tab=readme-ov-file#%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83)：anaconda新建环境、yolov7源码下载、安装第三方包（CPU/GPU版）、安装wandb
 * [准备数据集](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment?tab=readme-ov-file#%E5%87%86%E5%A4%87%E6%95%B0%E6%8D%AE%E9%9B%86)：下载yolo mark、修改配置、进行标注、移动图片和标签至指定文件夹中
-* [yolov7参数修改](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment?tab=readme-ov-file#yolov7%E5%8F%82%E6%95%B0%E4%BF%AE%E6%94%B9)：
-* [本地训练](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment?tab=readme-ov-file#yolov7%E5%8F%82%E6%95%B0%E4%BF%AE%E6%94%B9)：
-* [服务器训练](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment?tab=readme-ov-file#yolov7%E5%8F%82%E6%95%B0%E4%BF%AE%E6%94%B9)：
+* [yolov7参数修改](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment?tab=readme-ov-file#yolov7%E5%8F%82%E6%95%B0%E4%BF%AE%E6%94%B9)：yolov7.yaml修改、coco.yaml修改、train.py修改
+* [本地训练](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment?tab=readme-ov-file#yolov7%E5%8F%82%E6%95%B0%E4%BF%AE%E6%94%B9)：CPU训练、GPU训练
+* [服务器训练](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment?tab=readme-ov-file#yolov7%E5%8F%82%E6%95%B0%E4%BF%AE%E6%94%B9)：mobaxterm工具，autodl服务器租借，mobaxterm连接服务器，服务器环境配置、开始训练
 * [服务器部署](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment?tab=readme-ov-file#yolov7%E5%8F%82%E6%95%B0%E4%BF%AE%E6%94%B9)：
 
 # 配置环境
@@ -76,6 +76,8 @@
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/cuda_download.png)
   
 #### 安装第三方包
+* 参考链接
+  >https://blog.csdn.net/Stromboli/article/details/142705892
 * 在anaconda prompt中输入以下指令进行第三方包的安装
   ```
   conda activate yolov7                      //激活环境
@@ -106,6 +108,8 @@
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/cuda_gpu_test.png)
   
 ### 安装wandb
+* 参考文档
+  >https://blog.csdn.net/SF199853/article/details/132723055
 * yolov7训练的时候会使用wandb来图形化显示训练结果，所以也需要安装，在anaconda prompt中输入如下指令进行安装：
   ```
   conda activate yolov7  //激活环境
@@ -172,6 +176,8 @@
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/local_gpu_train.png)
 
 # 服务器训练
+* 参考文档
+>https://blog.csdn.net/weixin_43409991/article/details/134801718
 ## mobaxterm工具
 * mobaxterm功能比较强大，服务器训练将以该工具为例进行演示，下载链接如下，下载完后无脑安装即可
   >https://mobaxterm.mobatek.net/
@@ -240,4 +246,16 @@
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/server_train_over.png)
 
 # 服务器部署
-
+* 先用mobaxterm连接上服务器，配置完yolov7的环境，并将yolov7源文件一并上传，操作与上面一样，这里不过多赘述
+* 需要使用pycharm专业版，普通版没有ssh功能
+* 打开pycharm，点击上方的文件，选择设置，在弹窗中点击项目：xxx->python解释器，点击右上角的小齿轮，选择添加，然后新弹窗中选择SSH解释器，输入服务器地址、端口、用户名，最后点击下一步，操作如下图所示：
+  ![]()
+* 之后会跳弹窗询问是否连接，选择ok，然后服务器输入密码，如下图所示：
+  ![]()
+* 修改第一栏的解释器映射位置，我们创建的yolov7虚拟环境位置为miniconda3/envs/yolo，python解释器位置在yolo/bin/python，选择完成后，把自动更新取消（我测试时自动更新很容易上传文件失败），我们自己通过mobaxterm手动上传即可，最后点击完成即可，操作如下图所示：
+  ![]()
+* 等待pycharm更新完框架后，点击上方的工具，选择启动ssh会话。在弹窗中选择第一个，操作如下图所示:
+  ![]()
+* 之后pycharm就会启动服务器的终端，在终端上去运行自己的程序即可（操作指令与mobaxterm一样），这里我执行my_test.py，该文件会对一张图片进行识别，并把识别后的图片保存为test.png，从下图为运行后的结果：
+  ![]()
+  可以看到test.png已生成，部署成功
