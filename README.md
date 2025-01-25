@@ -72,7 +72,7 @@
 * 去下面的链接中找到合适的版本，下载并安装
   >https://developer.nvidia.com/cuda-toolkit-archive
   
-  在上一步中我选择的版本为CUDA 11.7 Update 1，所以这里我下载11.7.1这个版本，选择相应的参数并下载，如下图所示：
+  在上一步中我选择的版本为CUDA 11.7 Update 1，所以这里我下载11.7.1这个版本，选择相应的参数下载并安装，如下图所示：
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/cuda_download.png)
   
 #### 安装第三方包
@@ -172,5 +172,72 @@
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/local_gpu_train.png)
 
 # 服务器训练
+## mobaxterm工具
+* mobaxterm功能比较强大，服务器训练将以该工具为例进行演示，下载链接如下，下载完后无脑安装即可
+  >https://mobaxterm.mobatek.net/
+* 因为会涉及到许多从电脑到mobaxterm与从mobaxterm到电脑的复制粘贴，Crtl + c、Crtl + v大法有的时候没用，所以下面给出一部分复制粘贴快捷键
+  ```
+  Crtl + c、Crtl + v  //电脑端复制、粘贴快捷键
+  选中内容+ Ctrl + Insert(Ins) //mobaxterm复制
+  Ctrl + Insert(Ins)  //mobaxterm粘贴
+  ```
+  参考文档
+  >https://blog.csdn.net/Sure_Lee/article/details/115065262
+* 电脑端与服务器间的文件传输：mobaxterm连接上服务器后在左侧一栏会显示服务器的目录，电脑端与服务器可以直接拖拽文件来进行传输，如下图所示：
+  ![]()
+  
+## AutoDL租借服务器
+* 去AutodDL官网注册一个账号，地址如下：
+  >https://www.autodl.com/home
+* 点击上方的算力市场，然后选择地区和GPU型号，有可用的会显示x卡可租，点击x卡可租即进入具体界面，在镜像一栏选择基础镜像，然后在下面的下拉框中选择Miniconda / conda3 / 3.10(ubuntu22.04) / 11.8，最后点击立刻创建即可完成服务器的租借，流程如下图所示：
+  ![]()
+
+## 使用mobaxterm连接服务器
+* AutoDL租借完服务器后，在容器实例一栏可以看到自己刚刚租的服务器，如下图所示：
+  ![]()
+* 我们需要复制登录指令和命名，复制完信息如下：
+  ```
+  ssh -p 33019 root@connect.nmb1.seetacloud.com
+  tsZRdXT43EmJ
+  ```
+  其中33019为端口号，root为用户名，connect.nmb1.seetacloud.com为服务器地址，tsZRdXT43EmJ为登录服务器的密码
+* 打开mobaxterm，点击上方的session，在弹出的界面中选择SSH，然后在相应的位置填入服务器地址、用户名、端口号，最后点击ok即可开始连接服务器，如下图所示：
+  ![]()
+* 随后会让你输入密码，把刚刚的密码复制过来，按下回车即可，注意你输入的密码是不会在上面显示出来的，连接成功后的界面如下图所示：
+  ![]()
+
+## 传输文件到服务器
+* 将你需要用到的文件拖拽到服务器的目录里（如果按我上述的操作只需要上传整个yolov7源码文件夹即可），传输比较慢，需要耐心等待
+
+## 服务器端配置环境
+* 输入以下指令来进行服务器环境配置，其实与本地配置环境差不多，因为我们选择服务器环境时cuda版本选择为11.8，所以torch指令需要做相应的变换
+  ```
+  conda create -n yolov7 python==3.7.4          //创建虚拟环境
+  conda activate yolov7                         //激活环境
+  cd /d ./yolov7-main                          //移动至yolov7源码文件夹中
+  pip install -r requirements.txt              //安装第三方包
+  pip uninstall torch torchvision torchaudio  //卸载cpu版本包
+  pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu118  //安装cuda 11.8版本对应的torch套件
+  ```
+* 下载并登录wandb，与本地一样，输入以下指令：
+  ```
+  conda activate yolov7  //激活环境
+  pip install wandb      //安装wandb
+  wandb login            //登录wandb
+  ```
+* 将cuda_gpu_test,py也一同传输到yolov7源文件夹中，执行以下指令，输出为True即为服务器环境配置成功
+  ```
+  conda activate yolov7    //激活环境
+  python cuda_gpu_test.py //运行测试文件
+  ```
+## 开始训练
+* 输入以下指令开始训练
+  ```
+  conda activate yolov7    //激活环境
+  python train.py          //开始训练
+  ```
+* 训练完成后的服务器输出如下图所示：
+  ![]()
 
 # 服务器部署
+
