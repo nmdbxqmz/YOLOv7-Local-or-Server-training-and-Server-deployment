@@ -46,6 +46,7 @@
   cd /d D:\software\conda\envs\yolov7-main  //跳转至yolov7源码的文件夹中，后面的这个地址请根据自己的实际路径去修改
   pip install -r requirements.txt           // 开始安装第三方包
   ```
+  
 ### GPU版
 #### 读取自己电脑的GPU配置
 * 参考链接：
@@ -101,6 +102,7 @@
 #### 验证环境是否安装成功
 * 在yolov7的环境中运行cuda_gpu_test.py，如果如下图所示输出为True，则表示torch可以识别到GPU，GPU环境搭建成功
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/cuda_gpu_test.png)
+  
 ### 安装wandb
 * yolov7训练的时候会使用wandb来图形化显示训练结果，所以也需要安装，在anaconda prompt中输入如下指令进行安装：
   ```
@@ -115,13 +117,14 @@
   ```
   接着会出现如下提示，去该[网址](Https://wandb.ai/authorize)中复制api到anaconda prompt中，即可完成登录
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/wandb_login.png)
+  
 # 准备数据集
 * yolov7数据集要求的格式为txt，github有开源一个叫yolo mark的标注工具，标注后直接就是txt格式，在以下链接中下载：
   >https://github.com/AlexeyAB/Yolo_mark
 * 打开yolo_mark_master->x64->Release->data，其中的obj.names为你的类别名称，用记事本编辑，改为自己需要的类别名称即可，如下图所示：
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/obj_names.png)
 * 将自己用于训练的图片全部放在yolo_mark_master->x64->Release->data->img文件夹中
-* 打开yolo_mark_master->x64->Release->yolo_mark.cmd文件，即可对数据进行标注了（最坐牢的一步）
+* 打开yolo_mark_master->x64->Release->yolo_mark.cmd文件，即可对数据进行标注了（最坐牢的一集）
 * 标注完成后会在yolo_mark_master->x64->Release->data->img中产生与图片对应的txt文件
 * 在yolov7源码的文件夹中新建dataset文件夹专门用来存放数据集，考虑到可能会用yolov7训练几个不同的数据集得到不同的模型，所以在dataset文件夹中再新建一个文件夹来存放此次的数据集，我的是疲劳驾 驶检测，所以文件夹名为Fatigue_driving_detection，同时再在这个文件夹中新建images和labels文件夹用来存放图片和txt，如下图所示：
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/images_labels.png)
@@ -131,20 +134,22 @@
 # yolov7参数修改
 ## yolov7源码文件夹->cfg->training->yolov7.yaml修改
 * 将yolov7源码文件夹->cfg->training->yolov7.yaml这个文件复制一份后重命名为my_yolov7.yaml，然后将nc后的数字改为自己训练集中的类别总数（我的训练集类别总数为5，所以这里填5），其余都不动，如下图所示：
-  ![]()
+  ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/my_yolov7_yaml.png)
+  
 ## yolov7源码文件夹->data->coco.yaml修改
 * 将 yolov7源码文件夹->data->coco.yaml这个文件复制一份后重命名为mydata.yaml
 * 首先修改数据集地址，将train、val、test后的txt文件地址改为自己此次数据集中train、val、test.txt文件对应的地址，然后是nc后的数字改为自己训练集中的类别总数（即与my_yolov7.yaml中的一致），最后将names后list中的名称改为自己训练集的类别名称，记得与obj.names中的顺序一致，如下图所示：
-  ![]()
+  ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/mydata_yaml.png)
+  
 ## yolov7源码文件夹->train.py修改
 * 打开yolov7源码文件夹->train.py文件，往下翻到‘if __name__ == '__main__':’这里，修改weights、cfg、data、epochs后的参数，分别为yolov7.pt文件地址、my_yolov7.yaml文件地址，mydata.yaml文件地址、训练的轮数，如下图所示：
-  ![]()
+  ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/train_py.png)
 * 至此yolov7基本参数修改完毕
 
 # 本地训练
 ## CPU版
 * 将yolov7源码文件夹->train.py文件中的device->default后的参数修改为cpu，如下图所示：
-  ![]()
+  ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/device_cpu.png)
 * 打开anaconda prompt，依次输入以下指令即可开始训练
   ```
   conda activate yolov7                      //激活环境
@@ -154,7 +159,7 @@
   
 ## GPU版
 * 将yolov7源码文件夹->train.py文件中的device->default后的参数修改为0（0为GPU训练），batch-size->default后的参数为占用GPU内存的大小，请确保这个值小于你的GPU内存大小（我的存储为2GB，所以这里填1），如下图所示：
-  ![]()
+  ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/device_gpu.png)
 * 打开anaconda prompt，依次输入以下指令即可开始训练
   ```
   conda activate yolov7                      //激活环境
@@ -162,7 +167,7 @@
   python train.py                           //执行train.py文件，即开始训练
   ```
 * 训练时anaconda prompt显示如下：
-  ![]()
+  ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/local_gpu_train.png)
 
 # 服务器训练
 
