@@ -2,12 +2,12 @@
 * 因为大部分文件都是开源的，所以本仓库只附带了一点文件，但是会在相应位置给出下载链接
 
 # REANDME目录
-* [配置环境](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/tree/main?tab=readme-ov-file#%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83)
-* [准备数据集]()
-* [yolov7参数修改]()
-* [本地训练]()
-* [服务器训练]()
-* [服务器部署]()
+* [配置环境](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/tree/main?tab=readme-ov-file#%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83)：anaconda新建环境、yolov7源码下载、安装第三方包（CPU/GPU版）、安装wandb
+* [准备数据集](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment?tab=readme-ov-file#%E5%87%86%E5%A4%87%E6%95%B0%E6%8D%AE%E9%9B%86)：下载yolo mark、修改配置、进行标注、移动图片和标签至指定文件夹中
+* [yolov7参数修改](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment?tab=readme-ov-file#yolov7%E5%8F%82%E6%95%B0%E4%BF%AE%E6%94%B9)：
+* [本地训练](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment?tab=readme-ov-file#yolov7%E5%8F%82%E6%95%B0%E4%BF%AE%E6%94%B9)：
+* [服务器训练](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment?tab=readme-ov-file#yolov7%E5%8F%82%E6%95%B0%E4%BF%AE%E6%94%B9)：
+* [服务器部署](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment?tab=readme-ov-file#yolov7%E5%8F%82%E6%95%B0%E4%BF%AE%E6%94%B9)：
 
 # 配置环境
 ## anaconda新建环境
@@ -118,21 +118,51 @@
 # 准备数据集
 * yolov7数据集要求的格式为txt，github有开源一个叫yolo mark的标注工具，标注后直接就是txt格式，在以下链接中下载：
   >https://github.com/AlexeyAB/Yolo_mark
-* 打开yolo_mark_master->x64->Release->data，其中的obj.names为你的标签名称，用记事本编辑，改为自己需要的标签即可，如下图所示：
+* 打开yolo_mark_master->x64->Release->data，其中的obj.names为你的类别名称，用记事本编辑，改为自己需要的类别名称即可，如下图所示：
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/obj_names.png)
 * 将自己用于训练的图片全部放在yolo_mark_master->x64->Release->data->img文件夹中
 * 打开yolo_mark_master->x64->Release->yolo_mark.cmd文件，即可对数据进行标注了（最坐牢的一步）
 * 标注完成后会在yolo_mark_master->x64->Release->data->img中产生与图片对应的txt文件
 * 在yolov7源码的文件夹中新建dataset文件夹专门用来存放数据集，考虑到可能会用yolov7训练几个不同的数据集得到不同的模型，所以在dataset文件夹中再新建一个文件夹来存放此次的数据集，我的是疲劳驾 驶检测，所以文件夹名为Fatigue_driving_detection，同时再在这个文件夹中新建images和labels文件夹用来存放图片和txt，如下图所示：
-  ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/obj_names.png)
+  ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/images_labels.png)
 * 最后在Fatigue_driving_detection这个文件夹（即上一步你在dataset中为此次数据集新建的文件夹）中新建train、test、val这3个txt文件，文件中分别写训练集、测试集、验证集对应的图片地址，如下图所示：
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/train_test_val_txt.png)
+  
 # yolov7参数修改
+## yolov7源码文件夹->cfg->training->yolov7.yaml修改
+* 将yolov7源码文件夹->cfg->training->yolov7.yaml这个文件复制一份后重命名为my_yolov7.yaml，然后将nc后的数字改为自己训练集中的类别总数（我的训练集类别总数为5，所以这里填5），其余都不动，如下图所示：
+  ![]()
+## yolov7源码文件夹->data->coco.yaml修改
+* 将 yolov7源码文件夹->data->coco.yaml这个文件复制一份后重命名为mydata.yaml
+* 首先修改数据集地址，将train、val、test后的txt文件地址改为自己此次数据集中train、val、test.txt文件对应的地址，然后是nc后的数字改为自己训练集中的类别总数（即与my_yolov7.yaml中的一致），最后将names后list中的名称改为自己训练集的类别名称，记得与obj.names中的顺序一致，如下图所示：
+  ![]()
+## yolov7源码文件夹->train.py修改
+* 打开yolov7源码文件夹->train.py文件，往下翻到‘if __name__ == '__main__':’这里，修改weights、cfg、data、epochs后的参数，分别为yolov7.pt文件地址、my_yolov7.yaml文件地址，mydata.yaml文件地址、训练的轮数，如下图所示：
+  ![]()
+* 至此yolov7基本参数修改完毕
 
 # 本地训练
 ## CPU版
-
+* 将yolov7源码文件夹->train.py文件中的device->default后的参数修改为cpu，如下图所示：
+  ![]()
+* 打开anaconda prompt，依次输入以下指令即可开始训练
+  ```
+  conda activate yolov7                      //激活环境
+  cd /d D:\software\conda\envs\yolov7-main  //跳转至yolov7源码的文件夹中，后面的这个地址请根据自己的实际路径去修改
+  python train.py                           //执行train.py文件，即开始训练
+  ```
+  
 ## GPU版
+* 将yolov7源码文件夹->train.py文件中的device->default后的参数修改为0（0为GPU训练），batch-size->default后的参数为占用GPU内存的大小，请确保这个值小于你的GPU内存大小（我的存储为2GB，所以这里填1），如下图所示：
+  ![]()
+* 打开anaconda prompt，依次输入以下指令即可开始训练
+  ```
+  conda activate yolov7                      //激活环境
+  cd /d D:\software\conda\envs\yolov7-main  //跳转至yolov7源码的文件夹中，后面的这个地址请根据自己的实际路径去修改
+  python train.py                           //执行train.py文件，即开始训练
+  ```
+* 训练时anaconda prompt显示如下：
+  ![]()
 
 # 服务器训练
 
