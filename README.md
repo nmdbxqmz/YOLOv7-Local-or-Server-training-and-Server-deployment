@@ -22,16 +22,18 @@
   ```
   执行完毕后会在anaconda安装目录下的envs文件夹中生成一个叫yolov7的文件夹，如下图所示：
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/envs_environment.png)
-
+  
 ## 下载yolov7源码
 * yolov7源码下载地址如下：
   >https://github.com/WongKinYiu/yolov7
 * 把源码下到本地比较快的方法是下载zip，然后本地解压，操作如下图所示：
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/yolov7_download_zip.png)
+  
 * 建议把yolov7的源码解压到conda的envs目录下，我的文件目录如下图所示，之后会以此路径来执行指令，路径不同的指令做相应变化即可
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/total_environment_path.png)
+  
 * 下载训练好的yolov7参数文件yolov7.pt，进入yolov7源码下载地址，往下翻，点击下图所示的地方进行下载，下载完后将yolov7.pt放在yolov7源码的文件夹中
-  ![][(https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/yolov7pt_download.png)
+  ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/yolov7pt_download.png)
 
 ## 安装第三方包
 ### CPU版
