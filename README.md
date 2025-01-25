@@ -18,7 +18,16 @@
   >https://blog.csdn.net/qq_44000789/article/details/142214660
 * 打开anaconda自带的anaconda prompt，输入以下指令来创建一个python版本为3.7.4的新环境
   ```
-  conda create -n yolo python==3.7.4 //yolo为该环境的名称，你也可以改为其他的，不过需要注意之后的部分指令也需要做相应的更改
+  conda create -n yolov7 python==3.7.4 //yolov7为该环境的名称，你也可以改为其他的，不过需要注意之后的部分指令也需要做相应的更改
   ```
-  此时会在anaconda安装目录下的envs生成一个叫yolo的文件，如下图所示：
+  此时会在anaconda安装目录下的envs生成一个叫yolov7的文件，如下图所示：
+  ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/envs_environment.png)
+
+### 下载yolov7源码
+* yolov7源码下载地址如下：
+  >https://github.com/WongKinYiu/yolov7
+* 把源码下到本地比较快的方法是下载zip，然后本地解压，操作如下图所示：
+  ![]()
+* 建议把yolov7的源码解压到conda的envs目录下，我的文件目录如下图所示，之后会以此路径来执行指令，路径不同的指令做相应变化即可
+  ![]()
   
