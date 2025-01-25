@@ -2,7 +2,7 @@
 * 因为大部分文件都是开源的，所以本仓库不附带文件，但是会在相应位置给出下载链接
 
 # REANDME目录
-* 配置环境
+* [配置环境](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/tree/main?tab=readme-ov-file#%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83)
 * 标注数据
 * yolov7参数修改
 * 本地训练
@@ -34,7 +34,7 @@
 ## 安装第三方包
 ### CPU版
 * 在yolov7源码里有一个叫requirements.txt的文件，该文件的内容为yolov7所需要的第三包及其对应的版本，如下图所示：
-  ![]()
+  ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/requirements_example.png)
 * 打开anaconda prompt，输入以下指令来激活yolov7这个虚拟环境，否则第三包会安装到base这个虚拟环境中而非我们期望的地方
   ```
   conda activate yolov7
@@ -50,15 +50,51 @@
   >https://blog.csdn.net/bruce_zhao1407/article/details/109580835
 * 需要读取的配置参数为驱动程序版本和最高支持的CUDA版本
 * 第一种方法：打开电脑上的NVIDIA Control Panel，点击的系统信息，在显示和组件一栏分别读取驱动程序版本和最高支持的CUDA版本，如下图所示：
-  ![]()
+  ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/nvidai%20control%20panel.png)
 * 第二种方法：打开cmd，输入以下指令：
   ```
   nvidia-smi
   ```
   需要的读取的参数如下图所示：
-  ![]()
+  ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/nvidai%20smi.png)
+  
 #### 安装CUDA
-*
+* 去下面链接中的table3寻找适合自己电脑的版本，即自己的驱动程序版本大于CUDA版本最右边对应的所需要最低驱动程序版本
+  >https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html
+  我的驱动程序版本为517，大于516，所以我选择CUDA 11.7 Update 1这个版本，如下图所示：
+  ![]()
+* 去下面的链接中找到合适的版本，下载并安装
+  >https://developer.nvidia.com/cuda-toolkit-archive
+  在上一步中我选择的版本为CUDA 11.7 Update 1，所以这里我下载11.7.1这个版本，选择相应的参数并下载，如下图所示：
+  ![]()
+  
 #### 安装第三方包
-*
+* 输入以下指令进行第三方包的安装
+  ```
+  conda activate yolov7                      //激活环境
+  cd /d D:\software\conda\envs\yolov7-main  //跳转至yolov7源码的文件夹中，后面的这个地址请根据自己的实际路径去修改
+  pip install -r requirements.txt           // 开始安装第三方包
+  ```
+* 因为上述指令下载的为CPU版的torch，所以需要先卸载torch，执行以下指令：
+  ```
+  pip uninstall torch torchvision torchaudio
+  ```
+* 根据下面的链接选择合适的GPU版的torch版本
+  >https://blog.csdn.net/weixin_44842318/article/details/127492491
+  
+  因为我的CUDA版本为11.7，所以能用的torch版本为1.13.1，1.13.0，1.13.1 ，2.0.0，2.0.1
+* 根据上一步选择的torch版本去下面给的官网中找到对应的指令去执行：
+  >https://pytorch.org/get-started/previous-versions/
+  
+  这里我选择1.13.1版本，翻到对应的版本，执行CUDA 11.7版本的指令，如下图所示：
+  ![]()
+  执行的指令如下，一个是用conda安装，另一个是用pip安装，两个任选一个执行即可，版本不同的请根据自己的版本找到对应的指令
+  ```
+  conda install pytorch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 pytorch-cuda=11.7 -c pytorch -c nvidia 
+  pip install torch==1.13.1+cu117 torchvision==0.14.1+cu117 torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cu117
+  ```
+  
+#### 验证环境是否安装成功
+* 在yolov7的环境中运行cuda_gpu_test.py，如果如下图所示输出为True，则表示torch可以识别到GPU，GPU环境搭建成功
+  ![]()
 ### 安装wandb
