@@ -27,7 +27,7 @@
 * yolov7源码下载地址如下：
   >https://github.com/WongKinYiu/yolov7
 * 把源码下到本地比较快的方法是下载zip，然后本地解压，操作如下图所示：
-  ![]()
+  ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/yolov7_download_zip.png)
 * 建议把yolov7的源码解压到conda的envs目录下，我的文件目录如下图所示，之后会以此路径来执行指令，路径不同的指令做相应变化即可
-  ![]()
+  ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/total_environment_path.png)
   
