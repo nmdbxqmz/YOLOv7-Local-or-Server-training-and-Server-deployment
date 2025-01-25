@@ -1,13 +1,13 @@
 # YOLOv7-Local-or-Server-training-and-Server-deployment
-* 因为大部分文件都是开源的，所以本仓库不附带文件，但是会在相应位置给出下载链接
+* 因为大部分文件都是开源的，所以本仓库只附带了一点文件，但是会在相应位置给出下载链接
 
 # REANDME目录
 * [配置环境](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/tree/main?tab=readme-ov-file#%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83)
-* 准备数据集
-* yolov7参数修改
-* 本地训练
-* 服务器训练
-* 服务器部署
+* [准备数据集]()
+* [yolov7参数修改]()
+* [本地训练]()
+* [服务器训练]()
+* [服务器部署]()
 
 # 配置环境
 ## anaconda新建环境
@@ -31,7 +31,7 @@
 * 建议把yolov7的源码解压到conda的envs目录下，我的文件目录如下图所示，之后会以此路径来执行指令，路径不同的指令做相应变化即可
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/total_environment_path.png)
 * 下载训练好的yolov7参数文件yolov7.pt，进入yolov7源码下载地址，往下翻，点击下图所示的地方进行下载，下载完后将yolov7.pt放在yolov7源码的文件夹中
-  ![][()
+  ![][(https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/yolov7pt_download.png)
 
 ## 安装第三方包
 ### CPU版
@@ -114,19 +114,19 @@
   wandb login
   ```
   接着会出现如下提示，去该[网址](Https://wandb.ai/authorize)中复制api到anaconda prompt中，即可完成登录
-  ![]()
+  ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/wandb_login.png)
 # 准备数据集
 * yolov7数据集要求的格式为txt，github有开源一个叫yolo mark的标注工具，标注后直接就是txt格式，在以下链接中下载：
   >https://github.com/AlexeyAB/Yolo_mark
 * 打开yolo_mark_master->x64->Release->data，其中的obj.names为你的标签名称，用记事本编辑，改为自己需要的标签即可，如下图所示：
-  ![]()
+  ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/obj_names.png)
 * 将自己用于训练的图片全部放在yolo_mark_master->x64->Release->data->img文件夹中
 * 打开yolo_mark_master->x64->Release->yolo_mark.cmd文件，即可对数据进行标注了（最坐牢的一步）
 * 标注完成后会在yolo_mark_master->x64->Release->data->img中产生与图片对应的txt文件
 * 在yolov7源码的文件夹中新建dataset文件夹专门用来存放数据集，考虑到可能会用yolov7训练几个不同的数据集得到不同的模型，所以在dataset文件夹中再新建一个文件夹来存放此次的数据集，我的是疲劳驾 驶检测，所以文件夹名为Fatigue_driving_detection，同时再在这个文件夹中新建images和labels文件夹用来存放图片和txt，如下图所示：
-  ![]()
+  ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/obj_names.png)
 * 最后在Fatigue_driving_detection这个文件夹（即上一步你在dataset中为此次数据集新建的文件夹）中新建train、test、val这3个txt文件，文件中分别写训练集、测试集、验证集对应的图片地址，如下图所示：
-  ![]()
+  ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/train_test_val_txt.png)
 # yolov7参数修改
 
 # 本地训练
