@@ -251,7 +251,7 @@
 * 打开pycharm，点击上方的文件，选择设置，在弹窗中点击项目：xxx->python解释器，点击右上角的小齿轮，选择添加，然后新弹窗中选择SSH解释器，输入服务器地址、端口、用户名，最后点击下一步，操作如下图所示：
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/pycharm_setting.png)
 * 之后会跳弹窗询问是否连接，选择ok，然后服务器输入密码，如下图所示：
-  ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/pycharm_setting.png)
+  ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/pycharm_key.png)
 * 修改第一栏的解释器映射位置，我们创建的yolov7虚拟环境位置为miniconda3/envs/yolo，python解释器位置在yolo/bin/python，选择完成后，把自动更新取消（我测试时自动更新很容易上传文件失败），我们自己通过mobaxterm手动上传即可，最后点击完成即可，操作如下图所示：
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/pycharm_map.png)
 * 等待pycharm更新完框架后，点击上方的工具，选择启动ssh会话。在弹窗中选择第一个，操作如下图所示:
