@@ -39,7 +39,7 @@
   ```
   conda activate yolov7
   ```
-* 输入以下指令来安装requirements.txt中的第三方包
+* 然后在anaconda prompt中输入以下指令来安装requirements.txt中的第三方包
   ```
   cd /d D:\software\conda\envs\yolov7-main  //跳转至yolov7源码的文件夹中，后面的这个地址请根据自己的实际路径去修改
   pip install -r requirements.txt           // 开始安装第三方包
@@ -61,21 +61,23 @@
 #### 安装CUDA
 * 去下面链接中的table3寻找适合自己电脑的版本，即自己的驱动程序版本大于CUDA版本最右边对应的所需要最低驱动程序版本
   >https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html
+  
   我的驱动程序版本为517，大于516，所以我选择CUDA 11.7 Update 1这个版本，如下图所示：
-  ![]()
+  ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/cuda_driver_match.png)
 * 去下面的链接中找到合适的版本，下载并安装
   >https://developer.nvidia.com/cuda-toolkit-archive
+  
   在上一步中我选择的版本为CUDA 11.7 Update 1，所以这里我下载11.7.1这个版本，选择相应的参数并下载，如下图所示：
-  ![]()
+  ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/cuda_download.png)
   
 #### 安装第三方包
-* 输入以下指令进行第三方包的安装
+* 在anaconda prompt中输入以下指令进行第三方包的安装
   ```
   conda activate yolov7                      //激活环境
   cd /d D:\software\conda\envs\yolov7-main  //跳转至yolov7源码的文件夹中，后面的这个地址请根据自己的实际路径去修改
   pip install -r requirements.txt           // 开始安装第三方包
   ```
-* 因为上述指令下载的为CPU版的torch，所以需要先卸载torch，执行以下指令：
+* 因为上述指令下载的为CPU版的torch，所以需要先卸载torch，在环境已激活的条件下在anaconda prompt中执行以下指令：
   ```
   pip uninstall torch torchvision torchaudio
   ```
@@ -87,8 +89,8 @@
   >https://pytorch.org/get-started/previous-versions/
   
   这里我选择1.13.1版本，翻到对应的版本，执行CUDA 11.7版本的指令，如下图所示：
-  ![]()
-  执行的指令如下，一个是用conda安装，另一个是用pip安装，两个任选一个执行即可，版本不同的请根据自己的版本找到对应的指令
+  ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/pytorch_download.png)
+  在环境已经激活的条件下在anaconda prompt中执行的指令如下，一个是用conda安装，另一个是用pip安装，两个任选一个执行即可，版本不同的请根据自己的版本找到对应的指令
   ```
   conda install pytorch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 pytorch-cuda=11.7 -c pytorch -c nvidia 
   pip install torch==1.13.1+cu117 torchvision==0.14.1+cu117 torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cu117
@@ -96,5 +98,18 @@
   
 #### 验证环境是否安装成功
 * 在yolov7的环境中运行cuda_gpu_test.py，如果如下图所示输出为True，则表示torch可以识别到GPU，GPU环境搭建成功
-  ![]()
+  ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/cuda_gpu_test.png)
 ### 安装wandb
+* yolov7训练的时候会使用wandb来图形化显示训练结果，所以也需要安装，在anaconda prompt中输入如下指令进行安装：
+  ```
+  conda activate yolov7  //激活环境
+  pip install wandb      //安装wandb
+  ```
+* 安装完后，去下面给的官网中注册一个账号
+  >https://wandb.ai/home
+* 在环境已激活的条件下在anaconda prompt中输入
+  ```
+  wandb login
+  ```
+  接着会出现如下提示，去该[网址](Https://wandb.ai/authorize)中复制api到anaconda prompt中，即可完成登录
+  ![]()
