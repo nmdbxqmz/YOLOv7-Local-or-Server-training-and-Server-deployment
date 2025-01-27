@@ -1,5 +1,5 @@
 # YOLOv7-Local-or-Server-training-and-Server-deployment
-* 因为大部分文件都是开源的，所以本仓库只附带了一点文件，但是会在相应位置给出下载链接
+* 因为大部分文件都是开源的，所以本仓库只附了少量文件，但是开源文件会在相应位置给出下载链接
 
 # REANDME目录
 * [配置环境](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/tree/main?tab=readme-ov-file#%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83)：anaconda新建环境、yolov7源码下载、安装第三方包（CPU/GPU版）、安装wandb
@@ -8,6 +8,7 @@
 * [本地训练](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment?tab=readme-ov-file#yolov7%E5%8F%82%E6%95%B0%E4%BF%AE%E6%94%B9)：CPU训练、GPU训练
 * [服务器训练](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment?tab=readme-ov-file#yolov7%E5%8F%82%E6%95%B0%E4%BF%AE%E6%94%B9)：mobaxterm工具，autodl服务器租借，mobaxterm连接服务器，服务器环境配置、开始训练
 * [服务器部署](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment?tab=readme-ov-file#yolov7%E5%8F%82%E6%95%B0%E4%BF%AE%E6%94%B9)：pycharm配置ssh，开始连接，执行运行程序
+* [debug]()：服务器安装torch失败
 
 # 配置环境
 ## anaconda新建环境
@@ -272,3 +273,24 @@
 * 之后pycharm就会启动服务器的终端，在终端上去运行自己的程序即可（操作指令与mobaxterm一样），这里我执行my_test.py，该文件会对一张图片进行识别，并把识别后的图片保存为test.png，从下图为运行后的结果：
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/deployment_ok.png)
   可以看到test.png已生成，部署成功
+  
+# debug
+## 服务器torch安装失败
+* 我第一次安装环境安装得很快，但是第二次死活都报Could not find a version that satisfies the requirement torch (from versions: none)这个错，好久都没配置好环境，有同样问题的这里给出第二种配置方法
+* 在服务器配置基础镜像那里，选择PyTorch / 2.0.0 / 3.8(ubuntu20.04) / 11.8这个镜像，如下图所示：
+  ![]()
+* 用mobaxterm连接上服务器后，我们直接在系统自带的虚拟环境下配置环境，即base这个虚拟环境，输入以下指令激活base：
+  ```
+  conda activite
+  ```
+* 因为系统自带torch，所以需要如下图所示将requirements.txt文件中torch和torchvision这两行注释掉，再输入以下指令开始安装第三方包
+  ```
+  pip install -r requirements.txt
+  ```
+  ![]()
+* 输入pip list，可以看到torch和torchvision都是GPU版本的，此时去[官网](https://pytorch.org/get-started/previous-versions/#wheel)找到与之对应的torchaudio版本安装，这里直接给出相应的安装指令，如果版本不一样的需要自行找到的对应版本的指令并删去torch和torchvision的部分，如下图所示：
+  ```
+  pip install torchaudio==2.0.1 --index-url https://download.pytorch.org/whl/cu118
+  ```
+  ![]()
+* 最后执行cuda_gpu_test.py，如果输出为True，则环境安装成功
