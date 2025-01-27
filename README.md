@@ -7,7 +7,7 @@
 * [yolov7参数修改](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment?tab=readme-ov-file#yolov7%E5%8F%82%E6%95%B0%E4%BF%AE%E6%94%B9)：yolov7.yaml修改、coco.yaml修改、train.py修改
 * [本地训练](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment?tab=readme-ov-file#yolov7%E5%8F%82%E6%95%B0%E4%BF%AE%E6%94%B9)：CPU训练、GPU训练
 * [服务器训练](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment?tab=readme-ov-file#yolov7%E5%8F%82%E6%95%B0%E4%BF%AE%E6%94%B9)：mobaxterm工具，autodl服务器租借，mobaxterm连接服务器，服务器环境配置、开始训练
-* [服务器部署](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment?tab=readme-ov-file#yolov7%E5%8F%82%E6%95%B0%E4%BF%AE%E6%94%B9)：pycharm配置ssh，开始连接，执行运行程序
+* [服务器部署](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment?tab=readme-ov-file#yolov7%E5%8F%82%E6%95%B0%E4%BF%AE%E6%94%B9)：全部程序的都在服务器上运行，部分程序在服务器上运行
 * [debug](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/debug_torchaudio.png)：服务器安装torch失败
 
 # 配置环境
@@ -261,7 +261,8 @@
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/server_train_over.png)
 
 # 服务器部署
-* 先用mobaxterm连接上服务器，配置完yolov7的环境，并将yolov7源文件一并上传，操作与上面一样，这里不过多赘述
+## 全部程序都在服务器上运行
+* 先用mobaxterm连接上服务器，配置完yolov7的环境，并将yolov7源文件一并上传，操作与上面一样，这里不过多赘述（其实上传完后，可以用mobaxterm的指令窗口直接开始运行自己的程序，下面使用pycharm连接服务器属于是连接服务器的其他方法，没有mobaxterm的方便，不想用pycharm的可以直接跳过）
 * 需要使用pycharm专业版，普通版没有ssh功能
 * 打开pycharm，点击上方的文件，选择设置，在弹窗中点击项目：xxx->python解释器，点击右上角的小齿轮，选择添加，然后新弹窗中选择SSH解释器，输入服务器地址、端口、用户名，最后点击下一步，操作如下图所示：
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/pycharm_setting.png)
@@ -274,7 +275,17 @@
 * 之后pycharm就会启动服务器的终端，在终端上去运行自己的程序即可（操作指令与mobaxterm一样），这里我执行my_test.py，该文件会对一张图片进行识别，并把识别后的图片保存为test.png，从下图为运行后的结果：
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/deployment_ok.png)
   可以看到test.png已生成，部署成功
-  
+## 部分程序在服务器上运行
+* Q：主包主包，你的服务器运行全程序确实很强，但是还是太死板了，有没有更加灵活又生草的程序推荐一下？
+  A：有的兄弟有的，这么强的程序当然是不止一个了，一共又9个，都是当前版本t0.5的强势程序，下面我介绍其中的一个：paramiko大法（bushi）
+* 程序为主机开启摄像头将一帧图像保存为png发送给服务器，服务器接收后进行图像识别并将识别的结果存为json，当主机发现json文件生成后就会从服务器上下载下来，读取其中的内容并对发送的那张图片进行画框，最后通过cv2的imshow函数显示出来，程序为死循环程序，当你把cv2.imshow()显示的图片关闭时就会进行下一轮的识别，主机直接关闭进程即可停止，服务器端输入ctrl+c即可终止
+* 下载本仓库提供的server_ssh_test.py和my_detect.py文件，放入yolov7源码文件夹中，然后在yolov7源码文件夹创建一个叫temp的文件夹，最后一并上传至服务器
+* 主机端安装paramiko第三方包并下载ssh_t.py文件，修改以下指令中的hostname、port、username、password参数为自己租借服务器的实际参数：
+  ```
+  ssh.connect(hostname='connect.nmb1.seetacloud.com', port='30201', username='root', password='BGR+vtWFsLiN')
+  ```
+* 在主机端ssh_t.py同目录下创建一个叫temp的文件夹，运行ssh_t.py，同时启动服务器端的server_ssh_test.py即可
+
 # debug
 ## 服务器torch安装失败
 * 我第一次安装环境安装得很快，但是第二次死活都报Could not find a version that satisfies the requirement torch (from versions: none)这个错，好久都没配置好环境，有同样问题的这里给出第二种配置方法
