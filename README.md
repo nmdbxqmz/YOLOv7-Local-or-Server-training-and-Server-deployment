@@ -78,7 +78,7 @@
   ```
   nvcc -V
   ```
-  ![]()
+  ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/nvcc_V.png)
 #### 安装第三方包
 * 参考链接
   >https://blog.csdn.net/Stromboli/article/details/142705892
@@ -139,14 +139,14 @@
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/obj_names.png)
 * 将自己用于训练的图片全部放在yolo_mark_master->x64->Release->data->img文件夹中
 * 打开yolo_mark_master->x64->Release->yolo_mark.cmd文件，即可对数据进行标注了（最坐牢的一集），如下图所示：
-  ![]()
+  ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/yolo_mark.png)
 * 标注完成后会在yolo_mark_master->x64->Release->data->img中产生与图片对应的txt文件
 * 在yolov7源码的文件夹中新建dataset文件夹专门用来存放数据集，考虑到可能会用yolov7训练几个不同的数据集得到不同的模型，所以在dataset文件夹中再新建一个文件夹来存放此次的数据集，我的是疲劳驾 驶检测，所以文件夹名为Fatigue_driving_detection，同时再在这个文件夹中新建images和labels文件夹用来存放图片和txt，如下图所示：
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/images_labels.png)
 * 最后在Fatigue_driving_detection这个文件夹（即上一步你在dataset中为此次数据集新建的文件夹）中新建train、test、val这3个txt文件，文件中分别写训练集、测试集、验证集对应的图片地址，如下图所示：
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/train_test_val_txt.png)
 * 觉得上一步手动写txt麻烦？这里有可以一键完成上一步操作的case2.py文件，下载该文件放到yolov7源码文件夹中，其中需要修改的参数有xml_path、验证集、测试集的大小，xml_path修改为自己labels文件夹的路径，验证集、测试集大小根据自己数据集大小进行修改，如下图所示：
-  ![]()
+  ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/case2.png)
   参考文档
   >https://blog.csdn.net/m0_62899814/article/details/129934760
   
