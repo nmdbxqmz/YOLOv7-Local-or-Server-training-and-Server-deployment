@@ -8,7 +8,7 @@
 * [本地训练](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment?tab=readme-ov-file#yolov7%E5%8F%82%E6%95%B0%E4%BF%AE%E6%94%B9)：CPU训练、GPU训练
 * [服务器训练](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment?tab=readme-ov-file#yolov7%E5%8F%82%E6%95%B0%E4%BF%AE%E6%94%B9)：mobaxterm工具，autodl服务器租借，mobaxterm连接服务器，服务器环境配置、开始训练
 * [服务器部署](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment?tab=readme-ov-file#yolov7%E5%8F%82%E6%95%B0%E4%BF%AE%E6%94%B9)：pycharm配置ssh，开始连接，执行运行程序
-* [debug]()：服务器安装torch失败
+* [debug](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/debug_torchaudio.png)：服务器安装torch失败
 
 # 配置环境
 ## anaconda新建环境
@@ -239,6 +239,7 @@
   pip uninstall torch torchvision torchaudio  //卸载cpu版本包
   pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu118  //安装cuda 11.8版本对应的torch套件
   ```
+  最后一个指令执行失败的点击[这里](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/debug_torchaudio.png)
 * 下载并登录wandb，与本地一样，输入以下指令：
   ```
   conda activate yolov7  //激活环境
@@ -278,7 +279,7 @@
 ## 服务器torch安装失败
 * 我第一次安装环境安装得很快，但是第二次死活都报Could not find a version that satisfies the requirement torch (from versions: none)这个错，好久都没配置好环境，有同样问题的这里给出第二种配置方法
 * 在服务器配置基础镜像那里，选择PyTorch / 2.0.0 / 3.8(ubuntu20.04) / 11.8这个镜像，如下图所示：
-  ![]()
+  ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/debug_autodl_setting.png)
 * 用mobaxterm连接上服务器后，我们直接在系统自带的虚拟环境下配置环境，即base这个虚拟环境，输入以下指令激活base：
   ```
   conda activite
@@ -287,10 +288,10 @@
   ```
   pip install -r requirements.txt
   ```
-  ![]()
+  ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/debug_requirements.png)
 * 输入pip list，可以看到torch和torchvision都是GPU版本的，此时去[官网](https://pytorch.org/get-started/previous-versions/#wheel)找到与之对应的torchaudio版本安装，这里直接给出相应的安装指令，如果版本不一样的需要自行找到的对应版本的指令并删去torch和torchvision的部分，如下图所示：
   ```
   pip install torchaudio==2.0.1 --index-url https://download.pytorch.org/whl/cu118
   ```
-  ![]()
+  ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/debug_torchaudio.png)
 * 最后执行cuda_gpu_test.py，如果输出为True，则环境安装成功
