@@ -74,7 +74,11 @@
   
   在上一步中我选择的版本为CUDA 11.7 Update 1，所以这里我下载11.7.1这个版本，选择相应的参数下载并安装，如下图所示：
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/cuda_download.png)
-  
+* 安装完成后，打开cmd，输入以下指令，若出现如下图所示的内容则说明CUDA安装成功
+  ```
+  nvcc -V
+  ```
+  ![]()
 #### 安装第三方包
 * 参考链接
   >https://blog.csdn.net/Stromboli/article/details/142705892
@@ -97,9 +101,13 @@
   
   这里我选择1.13.1版本，翻到对应的版本，执行CUDA 11.7版本的指令，如下图所示：
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/pytorch_download.png)
-  在环境已经激活的条件下在anaconda prompt中执行的指令如下，一个是用conda安装，另一个是用pip安装，两个任选一个执行即可，版本不同的请根据自己的版本找到对应的指令
+  在环境已经激活的条件下在anaconda prompt中执行的指令如下，conda和pip都有2条指令，其中第二条指定了具体版本，兼容性更好，在conda/pip中的两个指令任选一个执行即可，版本不同的请根据自己的版本找到对应的指令
   ```
-  conda install pytorch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 pytorch-cuda=11.7 -c pytorch -c nvidia 
+  # 使用conda安装
+  conda install pytorch torchvision torchaudio cudatoolkit=11.7 -c pytorch
+  conda install pytorch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 pytorch-cuda=11.7 -c pytorch -c nvidia
+  # 使用pip安装
+  pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu117
   pip install torch==1.13.1+cu117 torchvision==0.14.1+cu117 torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cu117
   ```
   
@@ -130,12 +138,17 @@
 * 打开yolo_mark_master->x64->Release->data，其中的obj.names为你的类别名称，用记事本编辑，改为自己需要的类别名称即可，如下图所示：
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/obj_names.png)
 * 将自己用于训练的图片全部放在yolo_mark_master->x64->Release->data->img文件夹中
-* 打开yolo_mark_master->x64->Release->yolo_mark.cmd文件，即可对数据进行标注了（最坐牢的一集）
+* 打开yolo_mark_master->x64->Release->yolo_mark.cmd文件，即可对数据进行标注了（最坐牢的一集），如下图所示：
+  ![]()
 * 标注完成后会在yolo_mark_master->x64->Release->data->img中产生与图片对应的txt文件
 * 在yolov7源码的文件夹中新建dataset文件夹专门用来存放数据集，考虑到可能会用yolov7训练几个不同的数据集得到不同的模型，所以在dataset文件夹中再新建一个文件夹来存放此次的数据集，我的是疲劳驾 驶检测，所以文件夹名为Fatigue_driving_detection，同时再在这个文件夹中新建images和labels文件夹用来存放图片和txt，如下图所示：
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/images_labels.png)
 * 最后在Fatigue_driving_detection这个文件夹（即上一步你在dataset中为此次数据集新建的文件夹）中新建train、test、val这3个txt文件，文件中分别写训练集、测试集、验证集对应的图片地址，如下图所示：
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/train_test_val_txt.png)
+* 觉得上一步手动写txt麻烦？这里有可以一键完成上一步操作的case2.py文件，下载该文件放到yolov7源码文件夹中，其中需要修改的参数有xml_path、验证集、测试集的大小，xml_path修改为自己labels文件夹的路径，验证集、测试集大小根据自己数据集大小进行修改，如下图所示：
+  ![]()
+  参考文档
+  >https://blog.csdn.net/m0_62899814/article/details/129934760
   
 # yolov7参数修改
 ## yolov7源码文件夹->cfg->training->yolov7.yaml修改
