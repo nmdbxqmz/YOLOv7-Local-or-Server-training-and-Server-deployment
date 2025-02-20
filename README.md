@@ -146,7 +146,7 @@
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/images_labels.png)
 * 最后在Fatigue_driving_detection这个文件夹（即上一步你在dataset中为此次数据集新建的文件夹）中新建train、test、val这3个txt文件，文件中分别写训练集、测试集、验证集对应的图片地址，如下图所示：
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/train_test_val_txt.png)
-* 觉得上一步手动写txt麻烦？这里有可以一键完成上一步操作的case2.py文件，下载该文件放到yolov7源码文件夹中，其中需要修改的参数有xml_path、验证集、测试集的大小，xml_path修改为自己电脑中labels文件夹的路径，line+=后面的路径修改为自己电脑中images文件夹的路径，open中的参数修改为自己存放val.txt、test.txt、train.txt文件的路径，验证集、测试集大小根据自己数据集大小进行修改，如下图所示：
+* 觉得上一步手动写txt麻烦？这里有可以一键完成上一步操作的case2.py文件（注：需要所有的图片为png格式或其他的某一种格式，如果为png格式则不需要做额外的修改，如果不是，则需要将case2.py中所有'.png\n'修改为'.你的图片格式\n'），下载该文件放到yolov7源码文件夹中，其中需要修改的参数有xml_path、验证集、测试集的大小，xml_path修改为自己电脑中labels文件夹的路径，line+=后面的路径修改为自己电脑中images文件夹的路径，open中的参数修改为自己存放val.txt、test.txt、train.txt文件的路径，验证集、测试集大小根据自己数据集大小进行修改，如下图所示：
   ![](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/case2.png)
   参考文档
   >https://blog.csdn.net/m0_62899814/article/details/129934760
