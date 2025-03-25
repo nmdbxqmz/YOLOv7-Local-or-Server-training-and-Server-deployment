@@ -239,7 +239,7 @@
   pip uninstall torch torchvision torchaudio  //卸载cpu版本包
   pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu118  //安装cuda 11.8版本对应的torch套件
   ```
-  最后一个指令执行失败的点击[这里](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/blob/main/images/debug_torchaudio.png)
+  最后一个指令执行失败的点击[这里](https://github.com/nmdbxqmz/YOLOv7-Local-or-Server-training-and-Server-deployment/tree/main?tab=readme-ov-file#%E6%9C%8D%E5%8A%A1%E5%99%A8torch%E5%AE%89%E8%A3%85%E5%A4%B1%E8%B4%A5)
 * 下载并登录wandb，与本地一样，输入以下指令：
   ```
   conda activate yolov7  //激活环境
@@ -277,7 +277,7 @@
   可以看到test.png已生成，部署成功
 ## 部分程序在服务器上运行
 * Q：主包主包，你的服务器运行全程序确实很强，但是还是太死板了，有没有更加灵活又生草的程序推荐一下？
-  A：有的兄弟有的，这么强的程序当然是不止一个了，一共又9个，都是当前版本t0.5的强势程序，下面我介绍其中的一个：paramiko大法（bushi）
+  A：有的兄弟有的，这么强的程序当然是不止一个了，一共又9个，都是当前版本t0.5的强势程序，下面我介绍其中的一个：paramiko大法（bushi
 * 程序为主机开启摄像头将一帧图像保存为png发送给服务器，服务器接收后进行图像识别并将识别的结果存为json，当主机发现json文件生成后就会从服务器上下载下来，读取其中的内容并对发送的那张图片进行画框，最后通过cv2的imshow函数显示出来，程序为死循环程序，当你把cv2.imshow()显示的图片关闭时就会进行下一轮的识别，主机直接关闭进程即可停止，服务器端输入ctrl+c即可终止
 * 下载本仓库提供的server_ssh_test.py和my_detect.py文件，放入yolov7源码文件夹中，然后在yolov7源码文件夹创建一个叫temp的文件夹，最后一并上传至服务器
 * 主机端安装paramiko第三方包并下载ssh_t.py文件，修改以下指令中的hostname、port、username、password参数为自己租借服务器的实际参数：
